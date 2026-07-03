@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Compressor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --green-bg: #dff3e3;
+            --green-surface: #ffffff;
+            --green-primary: #7bbf8e;
+            --green-primary-dark: #5fa676;
+            --green-border: #b8dcc1;
+            --green-ring: rgba(123, 191, 142, 0.18);
+            --text-main: #2f3a31;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--green-bg);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: var(--green-surface);
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(47, 58, 49, 0.12);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            border: 1px solid var(--green-border);
+        }
+
+        h1 {
+            color: var(--text-main);
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 28px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        textarea {
+            font-family: 'Courier New', monospace;
+            padding: 15px;
+            border: 2px solid var(--green-border);
+            border-radius: 8px;
+            font-size: 14px;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+            color: var(--text-main);
+            background: #f8fdf9;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--green-primary);
+            box-shadow: 0 0 0 3px var(--green-ring);
+        }
+
+        button {
+            background: var(--green-primary);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            background: var(--green-primary-dark);
+            box-shadow: 0 5px 15px rgba(95, 166, 118, 0.28);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Prompt Compressor</h1>
+
+        <form method="POST">
+            <textarea name="prompt" rows="10" placeholder="Paste your prompt here..."></textarea>
+            <button type="submit">Compress</button>
+        </form>
+    </div>
+</body>
+</html>

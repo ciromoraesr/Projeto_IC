@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compression History</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --green-bg: #dff3e3;
+            --green-surface: #ffffff;
+            --green-subtle: #f5fbf6;
+            --green-primary: #7bbf8e;
+            --green-primary-dark: #5fa676;
+            --green-border: #b8dcc1;
+            --green-text: #2f3a31;
+            --green-muted: #536257;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--green-bg);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: var(--green-text);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--green-surface);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(47, 58, 49, 0.12);
+            padding: 40px;
+            border: 1px solid var(--green-border);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 12px;
+            font-size: 30px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--green-muted);
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: var(--green-primary-dark);
+            margin-bottom: 12px;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .prompt-block {
+            background: var(--green-subtle);
+            border: 1px solid #e2f0e6;
+            border-left: 4px solid var(--green-primary);
+            border-radius: 10px;
+            padding: 16px;
+            line-height: 1.6;
+            color: var(--green-muted);
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .timeline {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .step-card {
+            border: 1px solid var(--green-border);
+            border-radius: 12px;
+            padding: 22px;
+            background: #fcfffc;
+        }
+
+        .step-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .step-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--green-text);
+        }
+
+        .step-badge {
+            background: var(--green-primary);
+            color: white;
+            border-radius: 999px;
+            padding: 6px 12px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .meta-item {
+            background: var(--green-subtle);
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #e2f0e6;
+        }
+
+        .meta-label {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--green-muted);
+            margin-bottom: 6px;
+        }
+
+        .meta-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--green-text);
+        }
+
+        .section {
+            margin-top: 16px;
+        }
+
+        .section h3 {
+            color: var(--green-primary-dark);
+            margin-bottom: 10px;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .rouge-stats {
+            background: var(--green-subtle);
+            border: 1px solid #e2f0e6;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 12px;
+        }
+
+        .rouge-stat-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .rouge-stat-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .rouge-metric-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: var(--green-muted);
+            margin-bottom: 4px;
+        }
+
+        .rouge-metric-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--green-primary);
+        }
+
+        .rouge-stat-item {
+            background: white;
+            padding: 8px;
+            border-radius: 6px;
+            text-align: center;
+            border: 1px solid #daeae2;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 32px;
+        }
+
+        .action-link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: var(--green-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .action-link:hover {
+            transform: translateY(-2px);
+            background: var(--green-primary-dark);
+            box-shadow: 0 5px 15px rgba(95, 166, 118, 0.28);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Compression History</h1>
+        <p class="subtitle">Trace from the original prompt to the latest compressed version.</p>
+
+        <h2>Original Prompt</h2>
+        <div class="prompt-block">{{ history.original_prompt }}</div>
+
+        <div class="timeline">
+            {% for step in history.steps %}
+                <div class="step-card">
+                    <div class="step-header">
+                        <div class="step-title">Step {{ step.step_number }}</div>
+                        <div class="step-badge">{{ step.strategy }}</div>
+                    </div>
+
+                    <div class="meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Input Tokens</span>
+                            <span class="meta-value">{{ step.original_tokens }}</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Output Tokens</span>
+                            <span class="meta-value">{{ step.compressed_tokens }}</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Token Reduction</span>
+                            <span class="meta-value">{{ step.token_reduction }}</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Reduction %</span>
+                            <span class="meta-value">{{ step.reduction_percentage }}%</span>
+                        </div>
+                    </div>
+
+                    {% if step.rouge_scores %}
+                    <div class="section">
+                        <h3>ROUGE Scores</h3>
+                        <div class="rouge-stats">
+                            <div class="rouge-stat-row">
+                                <div class="rouge-stat-item">
+                                    <div class="rouge-metric-label">ROUGE-1 F-measure</div>
+                                    <div class="rouge-metric-value">{{ "%.4f" | format(step.rouge_scores.rouge1.fmeasure) }}</div>
+                                </div>
+                                <div class="rouge-stat-item">
+                                    <div class="rouge-metric-label">ROUGE-2 F-measure</div>
+                                    <div class="rouge-metric-value">{{ "%.4f" | format(step.rouge_scores.rouge2.fmeasure) }}</div>
+                                </div>
+                                <div class="rouge-stat-item">
+                                    <div class="rouge-metric-label">ROUGE-L F-measure</div>
+                                    <div class="rouge-metric-value">{{ "%.4f" | format(step.rouge_scores.rougeL.fmeasure) }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="section">
+                        <h3>Input Prompt</h3>
+                        <div class="prompt-block">{{ step.input_prompt }}</div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Compressed Prompt</h3>
+                        <div class="prompt-block">{{ step.compressed_prompt }}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="actions">
+            <a href="/" class="action-link">Back to Compressor</a>
+        </div>
+    </div>
+</body>
+</html>

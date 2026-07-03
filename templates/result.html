@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compression Result</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --green-bg: #dff3e3;
+            --green-surface: #ffffff;
+            --green-subtle: #f5fbf6;
+            --green-primary: #7bbf8e;
+            --green-primary-dark: #5fa676;
+            --green-border: #b8dcc1;
+            --green-text: #2f3a31;
+            --green-muted: #536257;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--green-bg);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--green-surface);
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(47, 58, 49, 0.12);
+            padding: 40px;
+            border: 1px solid var(--green-border);
+        }
+
+        h1 {
+            color: var(--green-text);
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 28px;
+        }
+
+        h3 {
+            color: var(--green-primary-dark);
+            margin-top: 25px;
+            margin-bottom: 12px;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        p {
+            color: var(--green-muted);
+            line-height: 1.6;
+            background: var(--green-subtle);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--green-primary);
+            margin-bottom: 15px;
+            word-wrap: break-word;
+        }
+
+        ul {
+            list-style: none;
+            background: var(--green-subtle);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #e2f0e6;
+        }
+
+        li {
+            color: var(--green-muted);
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #d9e8dd;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        li::before {
+            content: "✓ ";
+            color: var(--green-primary-dark);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .stats-label {
+            color: var(--green-text);
+            font-weight: 600;
+        }
+
+        .reduction-highlight {
+            color: #28a745;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #dc3545;
+        }
+
+        .error.show {
+            display: block;
+        }
+        .myButton {
+            /* Reset browser defaults */
+            appearance: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            
+            /* Match your theme */
+            background: rgb(236, 107, 60);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            
+            /* Animation & Polish */
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .myButton:hover {
+            background: rgb(243, 84, 27);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(236, 116, 4, 0.171);
+        }
+
+        .myButton:active {
+            transform: translateY(0);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 30px;
+            background: var(--green-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .back-link:hover {
+            transform: translateY(-2px);
+            background: var(--green-primary-dark);
+            box-shadow: 0 5px 15px rgba(95, 166, 118, 0.28);
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .rouge-section {
+            background: var(--green-subtle);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e2f0e6;
+            margin-bottom: 15px;
+        }
+
+        .rouge-metric-group {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--green-primary);
+        }
+
+        .rouge-metric-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .rouge-metric-name {
+            font-weight: 600;
+            color: var(--green-text);
+            margin-bottom: 8px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .rouge-scores-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .rouge-score-item {
+            text-align: center;
+            background: var(--green-subtle);
+            padding: 8px;
+            border-radius: 4px;
+        }
+
+        .rouge-score-label {
+            font-size: 11px;
+            color: var(--green-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 4px;
+        }
+
+        .rouge-score-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--green-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if error %}
+            <div class="error show">
+                <strong>Error:</strong> {{ error }}
+            </div>
+            <a href="/" class="back-link">Back to Compressor</a>
+        {% else %}
+            <h1>Compression Result</h1>
+
+            <h3>Original Prompt</h3>
+            <p id="original-prompt">{{ data.original }}</p>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 25px; margin-bottom: 12px;">
+                <h3 style="margin: 0; color: var(--green-primary-dark);">Compressed Prompt</h3>
+                
+                <form method="POST" style="margin: 0;">
+                    <input type="hidden" name="prompt" value="{{ data.compressed }}">
+                    <input type="hidden" name="history_id" value="{{ history_id }}">
+                    <button type="submit" id="myButton" class="myButton">
+                        Compress Again
+                    </button>
+                </form>
+            </div>
+                        
+            <p>{{ data.compressed }}</p>
+
+            <h3>Statistics</h3>
+            <ul>
+                <li>
+                    <span class="stats-label">Original tokens:</span>
+                    <span>{{ data.original_local_tokens }}</span>
+                </li>
+                <li>
+                    <span class="stats-label">Compressed tokens:</span>
+                    <span>{{ data.compressed_local_tokens }}</span>
+                </li>
+                <li>
+                    <span class="stats-label">Token reduction:</span>
+                    <span>{{ data.token_reduction }}</span>
+                </li>
+                <li>
+                    <span class="stats-label">Reduction percentage:</span>
+                    <span class="reduction-highlight">{{ data.reduction_percentage }}%</span>
+                </li>
+                <li>
+                    <span class="stats-label">API tokens billed:</span>
+                    <span>Prompt: {{ data.api_usage_stats.prompt }} | Completion: {{ data.api_usage_stats.completion }} | Total: {{ data.api_usage_stats.total }}</span>
+                </li>
+                <li>
+                    <span class="stats-label">History steps:</span>
+                    <span>{{ history_length }}</span>
+                </li>
+            </ul>
+
+            {% if data.rouge_scores %}
+            <h3>ROUGE Evaluation Scores</h3>
+            <div class="rouge-section">
+                <div class="rouge-metric-group">
+                    <div class="rouge-metric-name">ROUGE-1 (Unigram)</div>
+                    <div class="rouge-scores-row">
+                        <div class="rouge-score-item">
+                            <div class="rouge-score-label">Precision</div>
+                            <div class="rouge-score-value">{{ "%.4f" | format(data.rouge_scores.rouge1.precision) }}</div>
+                        </div>
+                        <div class="rouge-score-item">
+                            <div class="rouge-score-label">Recall</div>
+                            <div class="rouge-score-value">{{ "%.4f" | format(data.rouge_scores.rouge1.recall) }}</div>
+                        </div>
+                        <div class="rouge-score-item">
+                            <div class="rouge-score-label">F-measure</div>
+                            <div class="rouge-score-value">{{ "%.4f" | format(data.rouge_scores.rouge1.fmeasure) }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rouge-metric-group">
+                    <div class="rouge-metric-name">ROUGE-2 (Bigram)</div>
+                    <div class="rouge-scores-row">
+                        <div class="rouge-score-item">
+                            <div class="rouge-score-label">Precision</div>
+                            <div class="rouge-score-value">{{ "%.4f" | format(data.rouge_scores.rouge2.precision) }}</div>
+                        </div>
+                        <div class="rouge-score-item">
+                            <div class="rouge-score-label">Recall</div>
+                            <div class="rouge-score-value">{{ "%.4f" | format(data.rouge_scores.rouge2.recall) }}</div>
+                        </div>
+                        <div class="rouge-score-item">
+                            <div class="rouge-score-label">F-measure</div>
+                            <div class="rouge-score-value">{{ "%.4f" | format(data.rouge_scores.rouge2.fmeasure) }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rouge-metric-group">
+                    <div class="rouge-metric-name">ROUGE-L (Sequence)</div>
+                    <div class="rouge-scores-row">
+                        <div class="rouge-score-item">
+                            <div class="rouge-score-label">Precision</div>
+                            <div class="rouge-score-value">{{ "%.4f" | format(data.rouge_scores.rougeL.precision) }}</div>
+                        </div>
+                        <div class="rouge-score-item">
+                            <div class="rouge-score-label">Recall</div>
+                            <div class="rouge-score-value">{{ "%.4f" | format(data.rouge_scores.rougeL.recall) }}</div>
+                        </div>
+                        <div class="rouge-score-item">
+                            <div class="rouge-score-label">F-measure</div>
+                            <div class="rouge-score-value">{{ "%.4f" | format(data.rouge_scores.rougeL.fmeasure) }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if data.analysis %}
+                
+                <h3>Redundancies</h3>
+                {% if data.analysis.redundancies and data.analysis.redundancies|length > 0 %}
+                    <ul>
+                        {% for item in data.analysis.redundancies %}
+                            <li style="justify-content: flex-start;">
+                                <span style="flex: 1;">{{ item }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>Prompt is well-structured and concise.</p>
+                {% endif %}
+            {% endif %}
+
+            <div class="actions">
+                <a href="/history/{{ history_id }}" class="back-link">View History</a>
+                <a href="/" class="back-link">Back to Compressor</a>
+            </div>
+        {% endif %}
+    </div>
+
+    <style>
+    .analysis-highlight{background:rgba(255,235,205,0.6); padding:2px 4px; border-radius:4px; position:relative; cursor:help;}
+    .analysis-highlight::after{content:attr(data-tooltip); position:absolute; left:0; top:calc(100% + 8px); background:#fff; border:1px solid #ddd; padding:8px; border-radius:6px; box-shadow:0 6px 20px rgba(0,0,0,0.08); white-space:pre-wrap; display:none; z-index:50; width:320px; max-width:calc(100vw - 40px);} 
+    .analysis-highlight:hover::after{display:block;}
+    </style>
+
+    <script>
+    const analysis = data.analysis 
+    const originalEl = document.getElementById('original-prompt');
+    if (analysis && originalEl) {
+      let text = originalEl.textContent;
+      function escapeAttr(s){ return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+      analysis.redundancies = analysis.redundancies || [];
+      analysis.redundancies.forEach(function(item){
+        let m = item.match(/(?:\d+\.\s*)?(?:\[(.*?)\]|([^:]+?))\s*:/);
+        let target = m ? (m[1]||m[2]) : (item.split(':')[0] || item);
+        target = (target||'').trim();
+        if (!target) return;
+        const esc = target.replace(/[.*+?^${}()|[\\]\\]/g,'\\\\$&');
+        const regex = new RegExp(esc,'gi');
+        const tooltip = escapeAttr(item);
+        text = text.replace(regex, function(match){
+          return '<span class="analysis-highlight" data-tooltip="'+tooltip+'">'+match+'</span>';
+        });
+      });
+      originalEl.innerHTML = text;
+    }
+    </script>
+
+</body>
+
+</html>
